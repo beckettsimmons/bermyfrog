@@ -2,88 +2,23 @@
 import pygame , sys
 import pygame.locals as pg
 import time
-from timer import Timer
 
-# to do list:
-#   slow motion replays
-#   use timer
+import globals
+from timer import Timer
+from frog import Frog
+from road import Road
+from vehicle import Vehicle
+from bang import Bang
 
 pygame.init()
 
-####### GLOBAL VARIABLES
-WIDTH = 800 # x
-HEIGHT = 600 # y
-SCREENSIZE = (WIDTH, HEIGHT)
-ROWS = 10
-COLUMNS = 10
-
-ZONE = pygame.display.set_mode([WIDTH , HEIGHT])
-CAPTION = pygame.display.set_caption('Bermy Frog!')
-
-###### define colors
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-BROWN = (50, 50, 0)
-BLUE = (0, 0, 255)
-
-
-
-######## define classes
-class Frog():
-    global ZONE
-    def __init__(self, color = GREEN, pos = [10, 10]):
-        self.pos = pos
-        #self.cordinate = [
-        self.size = [25, 25]
-        self.color = color
-        self.direction = "UP"
-        self.collision = 0
-    def display(self):
-        pygame.draw.rect(ZONE, self.color, (self.pos[0], self.pos[1], self.size[0], self.size[1] ) )
-
-
-class Road():
-    def __init__(self, pos = [0, HEIGHT-100]):
-        self.pos = pos
-        self.size = [800, 100]
-        self.color = BROWN
-    def display(self):
-        pygame.draw.rect(ZONE, self.color, (self.pos[0], self.pos[1], self.size[0], self.size[1]/2 ) )
-        pygame.draw.rect(ZONE, self.color, (self.pos[0], self.pos[1]+50, self.size[0], self.size[1]/2 ) )
-        pygame.draw.rect(ZONE, BLACK, (self.pos[0], self.pos[1]+45, self.size[0], 10 ) )
-
-class Vehicle():
-    global ZONE
-    def __init__(self, color = GREEN, pos = [10, 10]):
-        self.pos = pos
-        #self.cordinate = [
-        self.size = [200, 45]
-        self.color = color
-    def display(self):
-        pygame.draw.rect(ZONE, self.color, (self.pos[0], self.pos[1], self.size[0], self.size[1] ) )
-
-class Bang():
-    global ZONE
-    def __init__(self, color = RED, pos = [0, 0]):
-        self.pos = pos
-        #self.cordinate = [
-        self.size = [WIDTH, HEIGHT]
-        self.color = color
-    def display(self):
-        pygame.draw.rect(ZONE, self.color, (self.pos[0], self.pos[1], self.size[0], self.size[1] ) )
-
-
-
-
-####### define functions
-
+ZONE = pygame.display.set_mode([globals.WIDTH , globals.HEIGHT])
+pygame.display.set_caption('Bermy Frog!')
 
 
 def main():
     
-    ZONE.fill(BLACK)
+    ZONE.fill(globals.BLACK)
     road1.display()
     road2.display()
     road3.display()
@@ -129,8 +64,8 @@ def main():
     frog2.pos = [frog2.pos[0]+left_mod_x, frog2.pos[1]+left_mod_y]
 
     #if cars drive off screen, wrap around
-    if car.pos[0] > WIDTH : car.pos[0] = 0
-    if car2.pos[0]+car2.size[0] < 0 : car2.pos[0] = WIDTH
+    if car.pos[0] > globals.WIDTH : car.pos[0] = 0
+    if car2.pos[0]+car2.size[0] < 0 : car2.pos[0] = globals.WIDTH
 
     #move cars across screen
     car.pos = [car.pos[0]+3, car.pos[1]]
@@ -138,10 +73,10 @@ def main():
 
     #wrap frog1 around the screen
     #alternative, make a barrier
-    if frog.pos[0] > WIDTH : frog.pos[0] = 0
-    if frog.pos[0] < 0 : frog.pos[0] = WIDTH
-    if frog.pos[1] > HEIGHT : frog.pos[1] = 0
-    if frog.pos[1] < 0 : frog.pos[1] = HEIGHT
+    if frog.pos[0] > globals.WIDTH : frog.pos[0] = 0
+    if frog.pos[0] < 0 : frog.pos[0] = globals.WIDTH
+    if frog.pos[1] > globals.HEIGHT : frog.pos[1] = 0
+    if frog.pos[1] < 0 : frog.pos[1] = globals.HEIGHT
     
     #basic collision detection
     #frog1 position is within scope of vehicle positions
@@ -174,15 +109,15 @@ def main():
 
 
 ####### create objects
-frog = Frog(color = GREEN, pos = [WIDTH/2-10, HEIGHT-25])
-frog2 = Frog(color = WHITE, pos = [WIDTH/2+50, HEIGHT-25])
-car = Vehicle(color = RED, pos = [0, HEIGHT-95])
-car2 = Vehicle(color = BLUE, pos = [0, HEIGHT-300])
-bang = Bang(color = GREEN)
-bang2 = Bang(color = WHITE)
-road1 = Road(pos = [0, HEIGHT-150])
-road2 = Road(pos = [0, HEIGHT-300])
-road3 = Road(pos = [0, HEIGHT-500])
+frog = Frog(color = globals.GREEN, pos = [globals.WIDTH/2-10, globals.HEIGHT-25])
+frog2 = Frog(color = globals.WHITE, pos = [globals.WIDTH/2+50, globals.HEIGHT-25])
+car = Vehicle(color = globals.RED, pos = [0, globals.HEIGHT-95])
+car2 = Vehicle(color = globals.BLUE, pos = [0, globals.HEIGHT-300])
+bang = Bang(color = globals.GREEN)
+bang2 = Bang(color = globals.WHITE)
+road1 = Road(pos = [0, globals.HEIGHT-150])
+road2 = Road(pos = [0, globals.HEIGHT-300])
+road3 = Road(pos = [0, globals.HEIGHT-500])
 
 
 ###### start program
