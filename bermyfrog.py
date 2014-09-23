@@ -43,6 +43,7 @@ class Frog():
     def display(self):
         pygame.draw.rect(ZONE, self.color, (self.pos[0], self.pos[1], self.size[0], self.size[1] ) )
 
+
 class Road():
     def __init__(self, pos = [0, HEIGHT-100]):
         self.pos = pos
@@ -81,13 +82,13 @@ class Bang():
 
 
 def main():
-	
+    
     ZONE.fill(BLACK)
     road1.display()
     road2.display()
     road3.display()
     
-    frog.display()	
+    frog.display()  
     frog2.display()
     car.display()
     car2.display()
@@ -97,13 +98,13 @@ def main():
         bang.display()
     if frog2.collision == 1:
         bang2.display()
-	#frog.pos = [50, 50]
+    #frog.pos = [50, 50]
     pygame.display.update()
     
     mod_x = 0
-    mod_y = 0	
+    mod_y = 0   
     left_mod_x = 0
-    left_mod_y = 0	
+    left_mod_y = 0  
 
     #monitor arrow keys to move frog1
     keys = pygame.key.get_pressed()
@@ -141,7 +142,7 @@ def main():
     if frog.pos[0] < 0 : frog.pos[0] = WIDTH
     if frog.pos[1] > HEIGHT : frog.pos[1] = 0
     if frog.pos[1] < 0 : frog.pos[1] = HEIGHT
-	
+    
     #basic collision detection
     #frog1 position is within scope of vehicle positions
     if ( ( (car.pos[0] < frog.pos[0] < car.pos[0]+car.size[0]) & (car.pos[1] < frog.pos[1] < car.pos[1]+car.size[1]) ) | 
@@ -182,21 +183,19 @@ bang2 = Bang(color = WHITE)
 road1 = Road(pos = [0, HEIGHT-150])
 road2 = Road(pos = [0, HEIGHT-300])
 road3 = Road(pos = [0, HEIGHT-500])
-tick_time = 1000 * time.time()
-ticker = Timer()
 
 
 ###### start program
 
-#ticker.start_time()
+# Setup the main loop timer.
+main_timer = Timer()
+
 while True :
-    now = 1000 * time.time()
-    #Timer.start_time()	
-	
-    # comment
-    if now - tick_time > 10:
-    #if ticker.get_ticktime > ticker.start_time:
+
+    # If the time since the last tick is more than 10 milliseconds.
+    if main_timer.get_ticktime() > 10:
         main()
-        tick_time = 1000 * time.time()
-        #ticker.tick()
+
+        # Tick the timer to reset it.
+        main_timer.tick()
 
